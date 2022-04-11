@@ -24,6 +24,8 @@ dim(data)
 str(data)
 summary(data)
 
+### cut down data from feature selection 
+#data <- subset(data, select = -fbs)
 #check for NA
 sum(is.na(data) == TRUE) #there are no NAs
 

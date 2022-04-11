@@ -15,9 +15,9 @@ library(stats)
 
 set.seed(8)
 data <- fread('./volume/data/raw/heart.csv') %>%
-  select(c(thal,cp,ca,oldpeak,sex,exang,age,target))
+  select(c(thal,cp,ca,oldpeak,sex,exang,age,thalach,slope,target))
 
-x <- data[,-8]
+x <- data[,-10]
 y <- data$target
 
 set.seed(10, sample.kind = "Rounding")

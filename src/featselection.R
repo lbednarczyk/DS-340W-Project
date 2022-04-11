@@ -43,6 +43,4 @@ result_rfe1
 predictors(result_rfe1)
 
 # Print the results visually
-ggplot(data = result_rfe1, metric = "Accuracy") + theme_bw()
-ggplot(data = result_rfe1, metric = "Kappa") + theme_bw()
-
+ggplot(data = result_rfe1, metric = "Rsquared") + theme_bw()

@@ -1,5 +1,5 @@
 data <- fread('./volume/data/raw/heart.csv') %>%
-  select(c(thal,cp,ca,oldpeak,sex,exang,age,target))
+  select(c(thal,cp,ca,oldpeak,sex,exang,age,thalach,slope,target))
 
 # Model function 
 models <- function(x, y) {
@@ -73,13 +73,13 @@ females <- subset(data, sex == 0)
 males <- subset(data, sex == 1)
 
 # Modeling female cluster
-x2 <- females[,-8]
+x2 <- females[,-10]
 y2 <- females$target
 
 femalemodel <- models(x2,y2)
 
 # Modeling male cluster
-x3 <- males[,-8]
+x3 <- males[,-10]
 y3 <- males$target
 
 malemodel <- models(x3,y3)
@@ -94,13 +94,13 @@ under55 <- subset(data, age < 55)
 above55 <- subset(data, age >= 55)
 
 # Modeling under 55 cluster
-x4 <- under55[,-8]
+x4 <- under55[,-10]
 y4 <- under55$target
 
 under55model <- models(x4,y4)
 
 # Modeling 55 and above
-x5 <- above55[,-8]
+x5 <- above55[,-10]
 y5 <-above55$target
 
 above55model <- models(x5,y5)
