@@ -1,4 +1,4 @@
-rm(list=ls())
+#rm(list=ls())
 
 
 library(data.table)
@@ -11,11 +11,13 @@ library(caret)
 library(knitr)
 library(rpart)
 library(naivebayes)
+library(stats)
 
 set.seed(8)
-data <- fread('./volume/data/raw/heart.csv')
+data <- fread('./volume/data/raw/heart.csv') %>%
+  select(c(thal,cp,ca,oldpeak,sex,exang,age,target))
 
-x <- data[,-14]
+x <- data[,-8]
 y <- data$target
 
 set.seed(10, sample.kind = "Rounding")
@@ -51,7 +53,6 @@ train_rf$bestTune
 
 rf_preds <- predict(train_rf, test_x)
 Random_Forest <- confusionMatrix(rf_preds, as.factor(test_y), positive = "1")
-Random_Forest #0.885 accuracy
 
 #variable importance
 varImp(train_rf)
@@ -61,7 +62,6 @@ train_dt <- train(train_x, as.factor(train_y), method = 'rpart',
                   trControl = control)
 dt_preds <- predict(train_dt, test_x)
 decision_tree <- confusionMatrix(dt_preds, as.factor(test_y), positive = "1")
-decision_tree #0.836 accuracy 
 
 ##LOGISTIC REGRESSION
 train_glm <- train(train_x, as.factor(train_y), method = "glm",
@@ -69,14 +69,12 @@ train_glm <- train(train_x, as.factor(train_y), method = "glm",
                    trControl = control)
 glm_preds <- predict(train_glm, test_x)
 logistic_regression <- confusionMatrix(glm_preds, as.factor(test_y), positive = "1")
-logistic_regression #0.852 accuracy
 
 #NAIVE BAYES
 train_nb <- train(train_x, as.factor(train_y), method = "naive_bayes",
                   trControl = control)
 nb_preds <- predict(train_nb, test_x)
 naive_bayes <- confusionMatrix(nb_preds, as.factor(test_y), positive = "1")
-naive_bayes #0.869 accuracy
 
 
 #print confusion matrix and statistics for each model
